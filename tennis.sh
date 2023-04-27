@@ -52,8 +52,8 @@ printGameState() {
     echo " |       |       #       |       | "
     echo " --------------------------------- "
 
-    echo "Player 1 played: $player1Input"
-    echo "Player 2 played: $player2Input"
+    echo -e "       Player 1 played: $player1Input"
+    echo -e "       Player 2 played: $player2Input"
     echo 
     echo
 }
