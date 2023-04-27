@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-#define MAX_INPUT_LEN 100
-#define MAX_HISTORY_LEN 100
+#define MAX_INPUT_LEN 101
+#define MAX_HISTORY_LEN 101
 
 /**
  * Adds the paths in argv to the PATH environment variable
@@ -27,6 +27,9 @@ void addPaths(int argc, char** argv) {
         strcat(newpath, ":");
         strcat(newpath, argv[i]);
     }
+
+    setenv("PATH", newpath, 1);
+    free(newpath);
 }
 
 /**
