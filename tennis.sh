@@ -66,6 +66,7 @@ getPlayerInput() {
     player2InputValid=false
 
 
+    #make sure player inputs is valid
     while [ $player1InputValid = false ]; do
         read -s -p "Player 1 PICK A NUMBER: " player1Input 
         echo
@@ -118,28 +119,28 @@ updateGameState() {
 checkGameOver() {
 
     if ((ballPosition == 3)); then
-        echo "Player 1 Wins !"
+        echo "PLAYER 2 WINS !"
         gameOver=true
 
     elif ((ballPosition == -3)); then
-        echo "Player 2 Wins !"
+        echo "PLAYER 2 WINS !"
         gameOver=true
     elif ((player1Points == 0 && player2Points == 0)); then
         if ((ballPosition > 0)); then
-            echo "Player 1 Wins !"
+            echo "PLAYER 1 WINS !"
         elif ((ballPosition < 0)); then
-            echo "Player 2 Wins !"
+            echo "PLAYER 2 WINS !"
         else
             echo "IT'S A DRAW !"
         fi
         gameOver=true
 
     elif ((player1Points == 0)); then
-        echo "Player 2 Wins !"
+        echo "PLAYER 2 WINS !"
         gameOver=true
 
     elif ((player2Points == 0)); then
-        echo "Player 1 Wins !"
+        echo "PLAYER 1 WINS !"
         gameOver=true
     fi
 }
