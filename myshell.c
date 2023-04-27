@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #define MAX_INPUT_LEN 100
 #define MAX_HISTORY_LEN 100
@@ -56,7 +58,7 @@ void callCommand(char* input, int* len, char* history, int* pidHistory, int hist
 
     char const delim = ' ';
     char *command;
-    char *buffer[MAX_INPUT_LEN] = {{0}};
+    char *buffer[MAX_INPUT_LEN] = {0};
     int numArgs = 0;
 
     char *token;
@@ -74,7 +76,7 @@ void callCommand(char* input, int* len, char* history, int* pidHistory, int hist
     }
     else if (strcmp(command, "cd") == 0) {
         if (chdir(buffer[1]) != 0) {
-            printf("chdir failed\n");
+            perror("chdir failed");
         }
     } else if (strcmp(command, "history") == 0) {
         for (int i = 0; i < historyLen + 1; i++) {
@@ -84,10 +86,10 @@ void callCommand(char* input, int* len, char* history, int* pidHistory, int hist
         int pid = fork();
         if (pid == 0) {
             execvp(buffer[0], buffer);
-            printf("execvp failed\n");
+            perror("execvp failed");
             exit(0);
         } else if (pid < 0) {
-            printf("fork failed\n");
+            perror("fork failed");
         } else {
             wait(NULL);
             pidHistory[historyLen] = pid;
@@ -101,7 +103,7 @@ void callCommand(char* input, int* len, char* history, int* pidHistory, int hist
 int main(int argc, char** argv) {
     addPaths(argc, argv);
 
-    char** history = malloc(MAX_INPUT_LEN * MAX_HISTORY_LEN * sizeof(char));
+    char* history = malloc(MAX_INPUT_LEN * MAX_HISTORY_LEN * sizeof(char));
     int pidHistory[MAX_HISTORY_LEN];
     int historyLen = 0;
 
@@ -112,4 +114,6 @@ int main(int argc, char** argv) {
         getInput(input, &len);
         callCommand(input, &len, history, pidHistory, historyLen++);
     }
+
+    free(history);
 }
