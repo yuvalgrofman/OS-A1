@@ -13,7 +13,7 @@ initializeGame() {
 
     ballPosition=0
 
-    echo -e Player 1: $player1Points Player 2: $player2Points
+    echo -e " Player 1: ${player1Points}         Player 2: ${player2Points} "
     echo " --------------------------------- "
     echo " |       |       #       |       | "
     echo " |       |       #       |       | "
@@ -26,7 +26,7 @@ initializeGame() {
 #printGameState is responsible for printing the game state to the screen
 printGameState() {
 
-    echo -e Player 1: $player1Points Player 2: $player2Points
+    echo -e " Player 1: ${player1Points}         Player 2: ${player2Points} "
     echo " --------------------------------- "
     echo " |       |       #       |       | "
     echo " |       |       #       |       | "
@@ -132,6 +132,7 @@ checkGameOver() {
         else
             echo "IT'S A DRAW !"
         fi
+        gameOver=true
 
     elif ((player1Points == 0)); then
         echo "Player 2 Wins !"
